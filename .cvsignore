@@ -1,0 +1,7 @@
+configure
+Makefile
+README
+config.log
+config.cache
+config.status
+*.1
