@@ -1,0 +1,89 @@
+# $Id$
+#*****************************************************************************
+# DESCRIPTION: voneline source: Makefile pre-configure version
+# 
+# Author: Wilson Snyder <wsnyder@wsnyder.org> or <wsnyder@iname.com>
+# 
+# Code available from: http://www.veripool.com/voneline
+# 
+#*****************************************************************************
+# 
+# Copyright 1998-2003 by Wilson Snyder.  This program is free software; you can
+# redistribute it and/or modify it under the terms of either the GNU
+# General Public License or the Perl Artistic License.
+#
+# Voneline is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+#****************************************************************************/
+
+#### Start of system configuration section. ####
+
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+CC = @CC@
+LINK = @CC@
+
+LEX = @LEX@
+LEXFLAGS = 
+YACC = @YACC@
+YFLAGS = -d -v -t
+
+CFLAGS = -I. @CFLAGS@
+#CFLAGS = -I. -O2 -DDEBUGGING -g -Wall -I/usr/openwin/include
+CPPFLAGS = @CPPFLAGS@
+DEFS = @DEFS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@ @LEXLIBS@ -lm 
+
+prefix = @prefix@
+
+#### End of system configuration section. ####
+
+#### Rules
+
+.c.o:
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(DEFS) -c $< -o $@
+
+#### Top level
+
+default: all
+all: voneline
+
+clean mostlyclean distclean maintainer-clean::
+	rm -f *.o voneline
+
+distclean maintainer-clean::
+	rm -f Makefile config.h
+
+maintainer-clean::
+	rm -rf voneline.c
+
+maintainer-copy::
+
+Makefile: Makefile.in ../config.status
+	( cd .. ; ./config.status )
+
+#### Modules
+
+OBJS =	voneline.o \
+
+COMMON_HDRS = config.h
+
+#### Top library
+
+voneline:	$(OBJS)
+	$(CC) -o voneline $(OBJS)
+
+voneline.o:	voneline.c	$(COMMON_HDRS) 
+
+#### Object links
+
+voneline.c: 	voneline.l
+	${LEX} ${LEXFLAGS} -o$@ $<

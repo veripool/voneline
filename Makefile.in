@@ -1,0 +1,208 @@
+# $Id$
+#*****************************************************************************
+# DESCRIPTION: voneline: Makefile pre-configure version
+# 
+# Author: Wilson Snyder <wsnyder@wsnyder.org> or <wsnyder@iname.com>
+# 
+# Code available from: http://www.veripool.com/voneline
+# 
+#*****************************************************************************
+# 
+# Copyright 1998-2003 by Wilson Snyder.  This program is free software; you can
+# redistribute it and/or modify it under the terms of either the GNU
+# General Public License or the Perl Artistic License.
+# 
+# voneline is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+#****************************************************************************/
+#
+# make all	to compile and build.
+# make install	to install it.
+# make TAGS	to update tags tables.
+#
+# make clean  or  make mostlyclean
+#      Delete all files from the current directory that are normally
+#      created by building the program.	 Don't delete the files that
+#      record the configuration.  Also preserve files that could be made
+#      by building, but normally aren't because the distribution comes
+#      with them.
+#
+# make distclean
+#      Delete all files from the current directory that are created by
+#      configuring or building the program.  If you have unpacked the
+#      source and built the program without creating any other files,
+#      `make distclean' should leave only the files that were in the
+#      distribution.
+# 
+# make maintainer-clean
+#      Delete everything from the current directory that can be
+#      reconstructed with this Makefile.  This typically includes
+#      everything deleted by distclean, plus more: C source files
+#      produced by Bison, tags tables, info files, and so on.
+#
+# make extraclean
+#      Still more severe - delete backup and autosave files, too.
+
+#### Start of system configuration section. ####
+
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+MAKEINFO = makeinfo
+TEXI2DVI = texi2dvi
+CC = @CC@
+
+#### Don't edit: You're much better using configure switches to set these
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+# Directory in which to install scripts.
+bindir = @bindir@
+
+# Directory in which to install library files.
+datadir = @datadir@
+
+# Directory in which to install documentation info files.
+infodir = @infodir@
+
+# Where to install man pages, and what extension they should have.
+mandir= ${prefix}/man
+man1dir=$(mandir)/man1
+
+# Version of program
+VERSION = @VERSION@
+
+#### End of system configuration section. ####
+######################################################################
+
+default: all
+
+SHELL = /bin/sh
+
+INFOS = README
+MANS = voneline.1
+
+SUBDIRS = src
+
+#INFOS = voneline.info INSTALL voneline.txt
+
+# Files that can be generated, but should be up to date for a distribution.
+DISTDEP = $(INFOS) $(MANS) Makefile
+# Files to distribute.
+DISTFILES = $(INFOS) COPYING configure *.in \
+	install-sh mkinstalldirs *.texi \
+	src/*.in src/*.l \
+	*.pod \
+	$(DISTBIN) $(MANS)
+
+INSTALL_PROGS = src/voneline
+PROGS = $(INSTALL_PROGS)
+
+info: $(INFOS)
+
+voneline.html: voneline.texi
+	sed -e "s/@dmenu/@code/g" -e "s/@widget/@emph/g" -e "s/@resource/@code/g" \
+	    -e "s/@config/@code/g" -e "s/@switch/@code/g" -e "s/@prog/@strong/g" \
+	<voneline.texi >voneline.tmp
+	texi2html -monolithic voneline.tmp
+	rm voneline.tmp ; mv voneline.tmp.html voneline.html
+
+dvi: voneline.dvi
+
+voneline.dvi: voneline.texi
+	$(TEXI2DVI) $(srcdir)/voneline.texi
+
+README: readme.texi
+	$(MAKEINFO) -I$(srcdir) $(srcdir)/readme.texi --output=$@ \
+	--no-headers --no-validate
+
+installdirs:
+	$(SHELL) ${srcdir}/mkinstalldirs $(bindir) $(infodir)
+
+install: all $(MANS) #info installdirs install-info
+	for p in src/voneline; do \
+	  $(INSTALL_PROGRAM) $$p $(bindir)/$p; \
+	done
+	for p in $(MANS); do \
+	  $(INSTALL_PROGRAM) $$p $(man1dir)/$p; \
+	done
+
+%.1: %.pod
+	pod2man --center "Veripool Tools" --release $(VERSION) $< > $@
+
+# autoheader might not change config.h.in, so touch a stamp file.
+${srcdir}/config.h.in: stamp-h.in
+${srcdir}/stamp-h.in: configure.in Makefile.in ${srcdir}/Makefile.in ${srcdir}/config.h.in
+	cd ${srcdir} && autoheader
+	echo timestamp > ${srcdir}/stamp-h.in
+config.h: stamp-h
+stamp-h: config.h.in config.status
+	./config.status
+Makefile: Makefile.in config.status
+	./config.status
+src/Makefile: src/Makefile.in config.status
+	./config.status
+config.status: configure
+	./config.status --recheck
+configure: configure.in
+	autoconf
+
+maintainer-clean::
+	@echo "This command is intended for maintainers to use;"
+	@echo "rebuilding the deleted files requires makeinfo."
+	rm -f *.info* $(INFOS) configure bin/*
+
+test all clean mostlyclean distclean maintainer-clean maintainer-copy::
+	for dir in $(SUBDIRS); do \
+	  echo making $@ in $$dir ; \
+	  (cd $$dir && $(MAKE) $@) ; \
+	done
+
+clean mostlyclean distclean maintainer-clean::
+	rm -f $(SCRIPTS) *.tmp 
+	rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.ky *.kys *.log
+	rm -f *.pg *.pgs *.toc *.tp *.tps *.vr *.vrs
+	rm -f *.ev *.evs *.ov *.ovs *.cv *.cvs *.ma *.mas
+
+distclean maintainer-clean::
+	rm -f Makefile config.status config.cache config.log voneline TAGS
+
+maintainer-clean::
+	rm -f README $(MANS)
+
+TAGFILES=${srcdir}/src/*.c ${srcdir}/src/*.h ${srcdir}/src/[a-z]*.in \
+	${srcdir}/[a-z]*.in ${srcdir}/*.texi
+
+TAGS:	$(TAGFILES)
+	etags $(TAGFILES)
+
+tag:
+	distname=`sed -e '/VERSION/!d' \
+	-e 's/[^0-9]*\([0-9.a-z]*\).*/voneline_\1/' \
+	-e 's/[^A-Za-z0-9]/_/g' \
+	-e q configure.in`; \
+	cvs tag -F $$distname .
+
+# Don't depend on DISTFILES because there's no rule for "standards.info*".
+dist: $(DISTDEP)
+	distname=voneline-$(VERSION); \
+	rm -fr $$distname; \
+	mkdir $$distname $$distname/src; \
+	for file in $(DISTFILES); do \
+	  ln $$file $$distname/$$file \
+	  || { echo copying $$file instead; cp -p $$file $$distname/$$file;}; \
+	done; \
+	chmod -R a+r $$distname; \
+	tar chf $$distname.tar $$distname; \
+	gzip --force --best $$distname.tar; \
+	rm -fr $$distname
+
+maintainer-dist: dist tag
+	cp *.gz ~/backpack
+	cp *.gz ~/src/kits

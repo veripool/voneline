@@ -1,0 +1,82 @@
+\input texinfo @c -*-texinfo-*-
+@c %**start of header
+@setfilename readme.info
+@settitle Voneline Installation
+@c %**end of header
+
+@c DESCRIPTION: TexInfo: DOCUMENT source run through texinfo to produce README file
+@c Use 'make README' to produce the output file
+
+@node Top, Copyright, (dir), (dir)
+
+This is the voneline package.
+
+@menu
+* Copyright::                   
+* Description::                 
+* Obtaining Distribution::      
+* Supported Systems::           
+* Installation::                
+@end menu
+
+@node Copyright, Description, Top, Top
+@section Copyright
+
+This package is Copyright 1998-2003 by Wilson Snyder @email{wsnyder@@wsnyder.org}.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of either the GNU General Public License or the
+Perl Artistic License.
+
+This code is provided with no warranty of any kind, and is used entirely at
+your own risk.
+
+@node Description, Obtaining Distribution, Copyright, Top
+@section Description
+
+Voneline takes structural Verilog netlists and edits the whitespace so
+that one instantiation occurs on a single line.  This makes it convienient
+to grep and sort structural netlists. 
+
+See @samp{man voneline} after installation.
+
+@node Obtaining Distribution, Supported Systems, Description, Top
+@section Obtaining Distribution
+
+The latest version is available at 
+@uref{http://www.veripool.com/voneline}
+
+Download the latest package from that site, and decompress.
+@samp{gunzip voneline_version.tar.gz ; tar xvf voneline_version.tar}
+
+@node Supported Systems, Installation, Obtaining Distribution, Top
+@section Supported Systems
+
+This version of voneline has been built and tested on:
+
+@itemize @bullet
+@item sparc-sun-solaris2.6
+@item i386-linux
+@end itemize
+
+It should be trivial to port to other platforms, provided FLEX (GNU lex)
+is installed.
+
+@node Installation,  , Supported Systems, Top
+@section Installation
+
+@enumerate
+@item
+@code{cd} to the directory containing this INSTALL notice.
+
+@item
+Type @samp{configure} to configure voneline for your system.
+
+@item
+Type @samp{make} to compile voneline.
+
+@item
+Type @samp{make install} to install the programs and any data files and
+documentation.
+
+@end enumerate
