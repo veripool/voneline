@@ -6,8 +6,10 @@
 
 @c DESCRIPTION: TexInfo: DOCUMENT source run through texinfo to produce README file
 @c Use 'make README' to produce the output file
+@c Before release, run C-u C-c C-u C-a (texinfo-all-menus-update)
 
 @node Top, Copyright, (dir), (dir)
+@chapter voneline
 
 This is the voneline package.
 
