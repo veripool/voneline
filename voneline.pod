@@ -1,0 +1,34 @@
+# -*- Perl -*-
+######################################################################
+__END__
+
+=pod
+
+=head1 NAME
+
+voneline - Put one Verilog structural instantion per line
+
+=head1 SYNOPSIS
+
+  voneline < <infile> > <outfile>
+
+=head1 DESCRIPTION
+
+Voneline is a filter which takes Verilog structural netlists in stdin.  It
+changes the whitespace to have a single instantiation per line.  This
+compresses the file, and makes it easy to grep for instantiations.
+
+=head1 DISTRIBUTION
+
+The latest version is available from L<http://veripool.com>.
+
+Copyright 1998-2004 by Wilson Snyder.  This package is free software; you
+can redistribute it and/or modify it under the terms of either the GNU
+Lesser General Public License or the Perl Artistic License.
+
+=head1 AUTHORS
+
+Wilson Snyder <wsnyder@wsnyder.org>
+
+=cut
+######################################################################
