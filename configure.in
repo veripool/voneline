@@ -1,0 +1,35 @@
+dnl DESCRIPTION: Process this file with autoconf to produce a configure script.
+dnl
+dnl Copyright 1998-2003 by Wilson Snyder.  This program is free software; you can
+dnl redistribute it and/or modify it under the terms of either the GNU
+dnl General Public License or the Perl Artistic License.
+AC_REVISION($Revision$)dnl
+AC_INIT(src/config.h.in)
+AC_CONFIG_HEADER(src/config.h)
+
+VERSION=1.003
+AC_SUBST(VERSION)
+AC_DEFINE_UNQUOTED(VERSION,"$VERSION")
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_LEX
+AC_PROG_YACC
+AC_DECL_YYTEXT
+
+dnl Checks for header files.
+AC_HEADER_STDC
+AC_HEADER_SYS_WAIT
+dnl AC_CHECK_HEADERS()
+
+dnl Checks for compiler characteristics.
+AC_C_INLINE
+
+dnl Checks for system services
+
+AC_OUTPUT(Makefile src/Makefile)
+
+AC_MSG_RESULT([])
+AC_MSG_RESULT([Now type 'make'])
+AC_MSG_RESULT([])
