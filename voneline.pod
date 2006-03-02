@@ -22,7 +22,7 @@ compresses the file, and makes it easy to grep for instantiations.
 
 The latest version is available from L<http://veripool.com>.
 
-Copyright 1998-2004 by Wilson Snyder.  This package is free software; you
+Copyright 1998-2006 by Wilson Snyder.  This package is free software; you
 can redistribute it and/or modify it under the terms of either the GNU
 Lesser General Public License or the Perl Artistic License.
 
