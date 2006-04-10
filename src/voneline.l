@@ -21,6 +21,11 @@
  *
  *****************************************************************************/
 
+#include "config.h"
+
+int Opt_Width = 0;
+int Cur_Column = 0;
+
 %}
 
 %x CMTMODE
@@ -31,28 +36,61 @@ NEWLINE		[\n]
 WHITENL		[ \t\r\n]
 %%
 
-{NEWLINE}+     	{ printf ("\n"); }
-{WHITESPACE}+	{ printf (" "); }
-"//".*[\n]     	{ ECHO; }
-"/*"	       	{ ECHO; BEGIN(CMTMODE); }
-"endmodule"	{ ECHO; }
-[a-zA-Z]	{ ECHO; BEGIN(INSTMODE); }
-
+{NEWLINE}+     		{ printf ("\n"); Cur_Column=0; }
+{WHITESPACE}+		{ printf (" "); }
+"//".*[\n]     		{ ECHO; Cur_Column=0; }
+"/*"	       		{ ECHO; BEGIN(CMTMODE); }
+"endmodule"		{ ECHO; }
+[a-zA-Z]		{ ECHO; BEGIN(INSTMODE); }
 .	       		{ ECHO; }
 
 <CMTMODE>"*"+[^*/\n]* 	{ ECHO; }
 <CMTMODE>"*"+"/"	{ ECHO; BEGIN(INITIAL); }
 <CMTMODE>. 		{ ECHO; }
 
-<INSTMODE>"//"[^\n]*[\n] 	{ ECHO; }
-<INSTMODE>[^;\n \t]* 	{ ECHO; }
-<INSTMODE>{WHITENL}+	{ printf (" "); }
-<INSTMODE>;	 	{ ECHO; BEGIN(INITIAL); }
+<INSTMODE>"//"[^\n]*[\n] 	{ ECHO; Cur_Column=0; }
+<INSTMODE>{WHITENL}+	{ printf (" "); Cur_Column+=1; }
+<INSTMODE>;	 	{ ECHO; BEGIN(INITIAL); Cur_Column+=yyleng; }
+<INSTMODE>,	 	{ if (Opt_Width && Cur_Column > Opt_Width) {
+			       printf("\n "); Cur_Column = 1;
+			  }
+			  ECHO; Cur_Column+=yyleng; }
+<INSTMODE>[^,;\n \t]* 	{ ECHO; Cur_Column+=yyleng; }
 
 %%
 
-int main()
-{
+void version() {
+    fprintf(stderr, "voneline %s\n",VERSION);
+}
+
+void help() {
+    version();
+    fprintf (stderr, "Usage: [--version] [--debug] [--width #] <IN >OUT\n");
+    fprintf (stderr, "Distributed from http://www.veripool.com\n");
+}
+
+int main (int argc, const char *argv[]) {
+    int arg;
+    for (arg=1; arg<argc; arg++) {
+	const char* ap = argv[arg];
+	if (ap[0]=='-' && ap[1]=='-') ap++;
+	if (0==strcmp (ap, "-debug")) {
+	} else if (0==strcmp (ap, "-help")) {
+	    help();
+	    exit(0);
+	} else if (0==strcmp (ap, "-version")) {
+	    version();
+	    exit(0);
+	} else if (0==strcmp (ap, "-width") && argc>=1) {
+            arg++;
+	    Opt_Width = atoi(argv[arg]);
+	} else {
+	    fprintf(stderr, "%%Error: Unknown option %s\n", argv[arg]);
+	    help();
+	    exit(0);
+	}
+    }
+
     yylex();
     printf ("\n");
     return(0);

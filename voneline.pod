@@ -18,6 +18,23 @@ Voneline is a filter which takes Verilog structural netlists in stdin.  It
 changes the whitespace to have a single instantiation per line.  This
 compresses the file, and makes it easy to grep for instantiations.
 
+=head1 ARGUMENTS
+
+=over 4
+
+=item --version
+
+Print program version and exit.
+
+=item --width I<number>
+
+By default, voneline will create lines that fit an entire instantiation and
+are too long for other tools.  With --width, the next comma after that
+column will appear on the next line.  (So choose a width a few hundred
+characters shorter then the tool's maximum.)
+
+=back
+
 =head1 DISTRIBUTION
 
 The latest version is available from L<http://veripool.com>.
