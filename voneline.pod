@@ -37,9 +37,9 @@ characters shorter then the tool's maximum.)
 
 =head1 DISTRIBUTION
 
-The latest version is available from L<http://veripool.com>.
+The latest version is available from L<http://www.veripool.org>.
 
-Copyright 1998-2006 by Wilson Snyder.  This package is free software; you
+Copyright 1998-2008 by Wilson Snyder.  This package is free software; you
 can redistribute it and/or modify it under the terms of either the GNU
 Lesser General Public License or the Perl Artistic License.
 

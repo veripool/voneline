@@ -2,13 +2,13 @@
 #*****************************************************************************
 # DESCRIPTION: voneline source: Makefile pre-configure version
 # 
-# Author: Wilson Snyder <wsnyder@wsnyder.org> or <wsnyder@iname.com>
+# Author: Wilson Snyder <wsnyder@wsnyder.org>
 # 
-# Code available from: http://www.veripool.com/voneline
+# Code available from: http://www.veripool.org
 # 
 #*****************************************************************************
 # 
-# Copyright 1998-2006 by Wilson Snyder.  This program is free software; you can
+# Copyright 1998-2008 by Wilson Snyder.  This program is free software; you can
 # redistribute it and/or modify it under the terms of either the GNU
 # General Public License or the Perl Artistic License.
 #
