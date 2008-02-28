@@ -67,6 +67,8 @@ maintainer-clean::
 
 maintainer-copy::
 
+test::
+
 Makefile: Makefile.in ../config.status
 	( cd .. ; ./config.status )
 

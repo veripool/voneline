@@ -15,7 +15,6 @@ dnl Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_LEX
-AC_PROG_YACC
 AC_DECL_YYTEXT
 
 dnl Checks for header files.

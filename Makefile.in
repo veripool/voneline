@@ -169,6 +169,7 @@ clean mostlyclean distclean maintainer-clean::
 	rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.ky *.kys *.log
 	rm -f *.pg *.pgs *.toc *.tp *.tps *.vr *.vrs
 	rm -f *.ev *.evs *.ov *.ovs *.cv *.cvs *.ma *.mas
+	rm -rf obj_dir
 
 distclean maintainer-clean::
 	rm -f Makefile config.status config.cache config.log voneline TAGS
@@ -206,3 +207,13 @@ dist: $(DISTDEP)
 maintainer-dist: dist tag
 	cp *.gz ~/backpack
 	cp *.gz ~/src/kits
+
+######################################################################
+
+obj_dir:
+	mkdir -p $@
+
+test::	obj_dir
+	src/voneline < t/test001.v > obj_dir/test.out
+	diff -c t/test001.out obj_dir/test.out 
+	@echo Tests Passed

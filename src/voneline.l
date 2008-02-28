@@ -30,6 +30,7 @@ int Cur_Column = 0;
 
 %x CMTMODE
 %x INSTMODE
+%x PPMODE
 
 WHITESPACE	[ \t\r]
 NEWLINE		[\n]
@@ -42,6 +43,7 @@ WHITENL		[ \t\r\n]
 "/*"	       		{ ECHO; BEGIN(CMTMODE); }
 "endmodule"		{ ECHO; }
 [a-zA-Z]		{ ECHO; BEGIN(INSTMODE); }
+`			{ ECHO; BEGIN(PPMODE); }
 .	       		{ ECHO; }
 
 <CMTMODE>"*"+[^*/\n]* 	{ ECHO; }
@@ -56,6 +58,10 @@ WHITENL		[ \t\r\n]
 			  }
 			  ECHO; Cur_Column+=yyleng; }
 <INSTMODE>[^,;\n \t]* 	{ ECHO; Cur_Column+=yyleng; }
+
+<PPMODE>\n	 	{ ECHO; Cur_Column=0; BEGIN(INITIAL); }
+<PPMODE>{WHITESPACE}+ 	{ printf(" "); }
+<PPMODE>. 		{ ECHO; }
 
 %%
 
