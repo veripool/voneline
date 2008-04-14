@@ -1,0 +1,36 @@
+Revision history for voneline.
+
+The contributors that suggested a given feature are shown in [].  [by ...]
+indicates the contributor was also the author of the fix; Thanks!
+
+* Voneline 1.020 2008/02/28
+
+**** Fix mixing `defines with contents of next line.  [Jeff Winston]
+
+* Voneline 1.020 2006/03/02
+
+**** Documentation updates
+
+* Voneline 1.000 2004/12/09
+
+** First public release
+
+* Voneline 0.000 1999/07/02
+
+** First created
+
+----------------------------------------------------------------------
+$Id: Changes 38075 2007-05-04 15:39:45Z wsnyder $
+DESCRIPTION: Documentation on change history for this package
+----------------------------------------------------------------------
+
+This uses outline mode in Emacs.  See C-h m [M-x describe-mode].
+
+Copyright 1999-2008 by Wilson Snyder.  This program is free software;
+you can redistribute it and/or modify it under the terms of either the GNU
+General Public License or the Perl Artistic License.
+
+Local variables:
+mode: outline
+paragraph-separate: "[ 	\f\n]*$"
+end:
