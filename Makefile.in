@@ -131,6 +131,13 @@ install: all $(MANS) #info installdirs install-info
 %.html: %.pod
 	pod2html --noindex --noheader $< > $@
 
+readme.html: readme.texi
+	sed -e "s/@dmenu/@code/g" -e "s/@widget/@emph/g" -e "s/@resource/@code/g" \
+	    -e "s/@config/@code/g" -e "s/@switch/@code/g" -e "s/@prog/@strong/g" \
+	     <readme.texi >readme.tmp
+	texi2html --no-menu -monolithic readme.tmp
+	rm readme.tmp ; mv readme.tmp.html readme.html
+
 # autoheader might not change config.h.in, so touch a stamp file.
 ${srcdir}/config.h.in: stamp-h.in
 ${srcdir}/stamp-h.in: configure.in Makefile.in ${srcdir}/Makefile.in ${srcdir}/config.h.in
