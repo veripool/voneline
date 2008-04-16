@@ -5,5 +5,7 @@ config.log
 config.cache
 config.status
 *.1
+*.html
+pod2htm*
 autom4te.cache
 obj_dir
