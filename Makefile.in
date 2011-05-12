@@ -186,30 +186,34 @@ TAGFILES=${srcdir}/src/*.c ${srcdir}/src/*.h ${srcdir}/src/[a-z]*.in \
 TAGS:	$(TAGFILES)
 	etags $(TAGFILES)
 
+######################################################################
+# Distributions
+
+DISTNAME := voneline-$(VERSION)
+DISTTAGNAME := $(subst .,_,$(subst -,_,$(DISTNAME)))
+
 tag:
-	distname=`sed -e '/VERSION/!d' \
-	-e 's/[^0-9]*\([0-9.a-z]*\).*/voneline_\1/' \
-	-e 's/[^A-Za-z0-9]/_/g' \
-	-e q configure.in`; \
-	cvs tag -F $$distname .
+	svnorcvs tag $(DISTTAGNAME)
 
 # Don't depend on DISTFILES because there's no rule for "standards.info*".
 dist: $(DISTDEP)
-	distname=voneline-$(VERSION); \
-	rm -fr $$distname; \
-	mkdir $$distname $$distname/src; \
+	rm -fr $(DISTNAME); \
+	mkdir $(DISTNAME) $(DISTNAME)/src; \
 	for file in $(DISTFILES); do \
-	  ln $$file $$distname/$$file \
-	  || { echo copying $$file instead; cp -p $$file $$distname/$$file;}; \
+	  ln $$file $(DISTNAME)/$$file \
+	  || { echo copying $$file instead; cp -p $$file $(DISTNAME)/$$file;}; \
 	done; \
-	chmod -R a+r $$distname; \
-	tar chf $$distname.tar $$distname; \
-	gzip --force --best $$distname.tar; \
-	rm -fr $$distname
+	chmod -R a+r $(DISTNAME); \
+	tar chf $(DISTNAME).tar $(DISTNAME); \
+	gzip --force --best $(DISTNAME).tar; \
+	mv $(DISTNAME).tar.gz $(DISTNAME).tgz; \
+	rm -fr $(DISTNAME)
 
-maintainer-dist: dist tag
-	cp *.gz ~/backpack
-	cp *.gz ~/src/kits
+preexist:
+	svnorcvs nexists $(DISTTAGNAME)
+
+maintainer-dist: preexist dist tag
+	svnorcvs release $(DISTNAME).tgz
 
 ######################################################################
 
