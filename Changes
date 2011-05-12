@@ -3,7 +3,11 @@ Revision history for voneline.
 The contributors that suggested a given feature are shown in [].  [by ...]
 indicates the contributor was also the author of the fix; Thanks!
 
-* Voneline 1.020 2008/02/28
+* Voneline 1.030 2011/05/12
+
+***  Add --no-comments option.
+
+* Voneline 1.021 2008/02/28
 
 **** Fix mixing `defines with contents of next line.  [Jeff Winston]
 

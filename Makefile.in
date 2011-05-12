@@ -219,4 +219,6 @@ obj_dir:
 test::	obj_dir
 	src/voneline < t/test001.v > obj_dir/test.out
 	diff -c t/test001.out obj_dir/test.out 
+	src/voneline --no-comments < t/test002.v > obj_dir/test.out
+	diff -c t/test002.out obj_dir/test.out 
 	@echo Tests Passed

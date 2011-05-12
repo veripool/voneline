@@ -22,6 +22,10 @@ compresses the file, and makes it easy to grep for instantiations.
 
 =over 4
 
+=item --no-comments
+
+Strip comments.
+
 =item --version
 
 Print program version and exit.
