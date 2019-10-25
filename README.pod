@@ -45,7 +45,7 @@ It's now easier to find or remove a cell with a "grep cell1".
    # Prerequisites
    sudo apt-get install flex
    # Obtain distribution kit
-   git clone git@github.com:veripool/voneline.git
+   git clone https://github.com/veripool/voneline.git
    # Build
    cd voneline
    git pull
