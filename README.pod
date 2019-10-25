@@ -1,0 +1,70 @@
+=pod
+
+=head1 SUMMARY
+
+Voneline is a simple pipe filter which takes Verilog structural
+netlists from stdin.  It changes the input's whitespace to have a
+single instantiation per line, and outputs the result.  This
+compresses the file, and makes it easy to grep for instantiations.
+
+For sources, see L<https://www.veripool.org/voneline>.
+
+=head1 EXAMPLE
+
+With the following Verilog input:
+
+   `define foo bar
+   module test;
+      input a,b,c,
+        d,
+        e,
+        f;
+      cell1
+        cell1
+          (
+       .a(a), .b(b),
+       .c(c));
+      cell2 cell2 (.a(a));
+      cell3 cell3 (.a(a));
+       endmodule
+
+Voneline produces:
+
+   `define foo bar
+   module test;
+   input a,b,c, d, e, f;
+   cell1 cell1 ( .a(a), .b(b), .c(c));
+   cell2 cell2 (.a(a));
+   cell3 cell3 (.a(a)); 
+   endmodule
+
+It's now easier to find or remove a cell with a "grep cell1".
+
+=head1 INSTALLATION
+
+   # Prerequisites
+   sudo apt-get install flex
+   # Obtain distribution kit
+   git clone git@github.com:veripool/voneline.git
+   # Build
+   cd voneline
+   git pull
+   autoconf
+   ./configure
+   make
+   make test
+   make install
+
+=head1 DOCUMENTATION
+
+See C<man voneline> after installation.
+
+=head1 LICENSE
+
+This package is Copyright 1998-2019 by Wilson Snyder
+<wsnyder@wsnyder.org>.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of either the GNU General Public License or the
+Perl Artistic License. This code is provided with no warranty of any
+kind, and is used entirely at your own risk.

@@ -1,0 +1,15 @@
+*.1
+*.html
+Makefile
+README
+autom4te.cache
+config.cache
+config.log
+config.status
+configure
+obj_dir
+pod2htm*
+src/config.h
+src/voneline
+src/voneline.c
+src/voneline.o

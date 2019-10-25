@@ -1,16 +1,16 @@
 %option noyywrap stack align never-interactive prefix="voneline"
 %{
-/* $Id$
+/*
  ******************************************************************************
  * DESCRIPTION: voneline: Convert Verilog gates to one-line-per-instance
  * 
  * Author: Wilson Snyder <wsnyder@wsnyder.org>
  * 
- * Code available from: http://www.veripool.org
+ * Code available from: http://www.veripool.org/voneline
  * 
  ******************************************************************************
  * 
- * Copyright 1998-2008 by Wilson Snyder.  This program is free software; you can
+ * Copyright 1998-2019 by Wilson Snyder.  This program is free software; you can
  * redistribute it and/or modify it under the terms of either the GNU
  * General Public License or the Perl Artistic License.
  *
@@ -75,7 +75,7 @@ void version() {
 void help() {
     version();
     fprintf (stderr, "Usage: [--version] [--debug] [--width #] [--no-comments] <IN >OUT\n");
-    fprintf (stderr, "Distributed from http://www.veripool.org\n");
+    fprintf (stderr, "Distributed from http://www.veripool.org/voneline\n");
 }
 
 int main (int argc, const char *argv[]) {

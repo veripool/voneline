@@ -1,14 +1,13 @@
-# $Id$
 #*****************************************************************************
 # DESCRIPTION: voneline: Makefile pre-configure version
 # 
 # Author: Wilson Snyder <wsnyder@wsnyder.org>
 # 
-# Code available from: http://www.veripool.org
+# Code available from: http://www.veripool.org/voneline
 # 
 #*****************************************************************************
 # 
-# Copyright 1998-2008 by Wilson Snyder.  This program is free software; you can
+# Copyright 1998-2019 by Wilson Snyder.  This program is free software; you can
 # redistribute it and/or modify it under the terms of either the GNU
 # General Public License or the Perl Artistic License.
 # 
@@ -85,7 +84,7 @@ default: all
 
 SHELL = /bin/sh
 
-INFOS = README
+INFOS = 
 MANS = voneline.1
 
 SUBDIRS = src
@@ -111,10 +110,6 @@ dvi: voneline.dvi
 voneline.dvi: voneline.texi
 	$(TEXI2DVI) $(srcdir)/voneline.texi
 
-README: readme.texi
-	$(MAKEINFO) -I$(srcdir) $(srcdir)/readme.texi --output=$@ \
-	--no-headers --no-validate
-
 installdirs:
 	$(SHELL) ${srcdir}/mkinstalldirs $(bindir) $(infodir)
 
@@ -130,13 +125,6 @@ install: all $(MANS) #info installdirs install-info
 	pod2man --center "Veripool Tools" --release $(VERSION) $< > $@
 %.html: %.pod
 	pod2html --noindex --noheader $< > $@
-
-readme.html: readme.texi
-	sed -e "s/@dmenu/@code/g" -e "s/@widget/@emph/g" -e "s/@resource/@code/g" \
-	    -e "s/@config/@code/g" -e "s/@switch/@code/g" -e "s/@prog/@strong/g" \
-	     <readme.texi >readme.tmp
-	texi2html --no-menu -monolithic readme.tmp
-	rm readme.tmp ; mv readme.tmp.html readme.html
 
 # autoheader might not change config.h.in, so touch a stamp file.
 ${srcdir}/config.h.in: stamp-h.in
@@ -173,6 +161,7 @@ clean mostlyclean distclean maintainer-clean::
 	rm -f *.ev *.evs *.ov *.ovs *.cv *.cvs *.ma *.mas
 	rm -rf obj_dir
 	rm -rf *.html pod2htm*
+	rm -rf autom4te.cache
 
 distclean maintainer-clean::
 	rm -f Makefile config.status config.cache config.log voneline TAGS

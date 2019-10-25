@@ -1,13 +1,13 @@
 dnl DESCRIPTION: Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright 1998-2008 by Wilson Snyder.  This program is free software; you can
+dnl Copyright 1998-2019 by Wilson Snyder.  This program is free software; you can
 dnl redistribute it and/or modify it under the terms of either the GNU
 dnl General Public License or the Perl Artistic License.
 AC_REVISION($Revision$)dnl
 AC_INIT(src/config.h.in)
 AC_CONFIG_HEADER(src/config.h)
 
-VERSION=1.030
+VERSION=1.040
 AC_SUBST(VERSION)
 AC_DEFINE_UNQUOTED(VERSION,"$VERSION")
 

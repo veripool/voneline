@@ -1,14 +1,13 @@
-# $Id$
 #*****************************************************************************
 # DESCRIPTION: voneline source: Makefile pre-configure version
 # 
 # Author: Wilson Snyder <wsnyder@wsnyder.org>
 # 
-# Code available from: http://www.veripool.org
+# Code available from: http://www.veripool.org/voneline
 # 
 #*****************************************************************************
 # 
-# Copyright 1998-2008 by Wilson Snyder.  This program is free software; you can
+# Copyright 1998-2019 by Wilson Snyder.  This program is free software; you can
 # redistribute it and/or modify it under the terms of either the GNU
 # General Public License or the Perl Artistic License.
 #
@@ -32,8 +31,6 @@ LINK = @CC@
 
 LEX = @LEX@
 LEXFLAGS = 
-YACC = @YACC@
-YFLAGS = -d -v -t
 
 CFLAGS = -I. @CFLAGS@
 #CFLAGS = -I. -O2 -DDEBUGGING -g -Wall -I/usr/openwin/include
